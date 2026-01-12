@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// GitHub Pages friendly base URL (e.g. /portfolio/)
+const BASE_URL = import.meta.env.BASE_URL || "/";
 import {
   Github,
   Linkedin,
@@ -22,11 +25,12 @@ import {
  *
  * Stack: React + Tailwind + Framer Motion + lucide-react
  *
- * Key features:
- * - Sticky nav with scroll-spy
- * - Command palette search (Ctrl/Cmd + K)
- * - Dark mode with localStorage
- * - Embedded resume section (inline PDF)
+ * How to use quickly:
+ * - Create a Vite React project
+ * - Install deps: framer-motion lucide-react
+ * - Ensure Tailwind is set up
+ * - Replace App.jsx with this file (or paste into App.jsx)
+ * - Edit the CONTENT object below
  */
 
 const CONTENT = {
@@ -38,68 +42,71 @@ const CONTENT = {
   email: "neiltoms485@gmail.com",
   github: "https://github.com/neiltoms485-prog",
   linkedin: "https://www.linkedin.com/in/neil-toms-13567b239",
-  resumeUrl: "/Neil-Toms-Resume.pdf", // put this PDF in /public
-
+  resumeUrl: `${BASE_URL}Neil-Toms-Resume.pdf`, // put your PDF in /public (Vite) or /public (Next)
   availability: "Open to entry-level IT / Web roles",
 
+  // Primary sections used throughout the site
   about: {
     headline: "Hands-on, detail-oriented, and obsessed with making things work.",
     body: [
-      "Tech-focused professional with hands-on experience supporting digital systems, optimizing workflows, and managing technical platforms in fast-paced environments.",
-      "Strong foundation in web technologies, documentation, and system administration with a growing focus on website design, application development, and user-centered digital solutions.",
-      "Known for problem-solving, adaptability, and translating technical concepts into clear communication.",
+      "I’m building a career in IT with a strong focus on websites, apps, and the systems behind them. I like projects that mix practical problem-solving with clean design.",
+      "I’m currently working full time while sharpening my skills in web development, Linux, and tooling. I’m also a maker — I tinker with Raspberry Pi, troubleshoot hardware/software issues, and design functional 3D prints.",
+      "Long-term, I want to build a website/app aimed at helping struggling teens: a safe place to feel seen, find resources, and grow.",
     ],
   },
 
+  // Skills are grouped for UX; keep it honest and update as you grow
   skills: {
-    Core: [
-      "Troubleshooting & Process Improvement",
-      "Technical Documentation & Reporting",
-      "Data Entry, Quality Assurance & Validation",
-      "Customer-Facing Technical Support",
-    ],
-    Web: ["HTML (Foundational)", "CSS (Foundational)", "Website Design", "UI/UX Fundamentals"],
-    "IT / Systems": [
-      "Help Desk & Desktop Support Fundamentals",
-      "System Administration (Growing)",
-      "Google Workspace Administration",
-      "EMR & Web-Based Platform Management",
-    ],
-    "Tools & Platforms": [
-      "Google Workspace",
-      "Microsoft Office",
-      "Alleva EMR",
-      "Web-Based CRM Systems",
-      "Live Chat Platforms",
-      "POS Systems",
-      "Documentation Tools",
-    ],
+    "Web": ["HTML", "CSS", "JavaScript", "Responsive UI", "Accessibility basics"],
+    "IT / Systems": ["Troubleshooting", "Windows basics", "Linux basics", "Networking fundamentals"],
+    "Tools": ["Git/GitHub", "Command line", "VS Code", "Canva (design workflow)"],
+    "Maker": ["Raspberry Pi", "3D printing", "Iterative prototyping"],
+    "Strengths": ["Customer service", "Communication", "Learning fast", "Reliability"],
   },
 
+  // Keep projects real; add links when available
   projects: [
     {
       id: "portfolio",
       name: "Interactive Portfolio Website",
-      blurb: "A polished, mobile-first portfolio with motion, search, and project storytelling.",
+      blurb:
+        "A polished, mobile-first portfolio with motion, search, and project storytelling.",
       tags: ["React", "Tailwind", "Design"],
-      links: { demo: "#", repo: "https://github.com/neiltoms485-prog" },
-      highlights: ["Smooth navigation + section search", "Dark mode toggle", "Clean content hierarchy and scannable cards"],
+      links: {
+        demo: "#",
+        repo: "https://github.com/neiltoms485-prog",
+      },
+      highlights: [
+        "Smooth navigation + section search",
+        "Dark mode toggle",
+        "Clean content hierarchy and scannable cards",
+      ],
     },
     {
       id: "pi",
       name: "Raspberry Pi Setup + Troubleshooting Notes",
-      blurb: "A repeatable setup checklist for imaging, boot issues, and quality-of-life tweaks.",
+      blurb:
+        "My repeatable setup checklist for imaging, boot issues, and basic hardening/quality-of-life tweaks.",
       tags: ["Linux", "Raspberry Pi", "Documentation"],
       links: { demo: "#", repo: "#" },
-      highlights: ["Step-by-step boot + imaging workflow", "Common failure modes and fixes", "Written for clarity + repeatability"],
+      highlights: [
+        "Step-by-step boot + imaging workflow",
+        "Common failure modes and fixes",
+        "Focus on clarity and repeatability",
+      ],
     },
     {
       id: "3d",
       name: "3D-Printed Cup & Lid Organizer (Prototype)",
-      blurb: "A functional storage design built around real-world constraints and iterative feedback.",
+      blurb:
+        "A functional storage design built around real-world constraints and iterative feedback.",
       tags: ["3D Printing", "CAD", "Iteration"],
       links: { demo: "#", repo: "#" },
-      highlights: ["Designed to fit tight cabinet dimensions", "Modular pieces that snap together", "Ergonomic curves for quick access"],
+      highlights: [
+        "Designed to fit tight cabinet dimensions",
+        "Modular pieces that snap together",
+        "Ergonomic curves for quick access",
+      ],
     },
   ],
 
@@ -109,52 +116,22 @@ const CONTENT = {
       company: "Starbucks",
       dates: "May 2025 — Present",
       bullets: [
-        "Operate POS and digital order management systems in a high-volume environment.",
-        "Maintain accuracy, speed, and consistency while following standardized workflows.",
-        "Collaborate with team members to resolve operational and technical issues in real time.",
+        "Deliver fast, accurate service in a high-volume environment.",
+        "Communicate clearly with teammates to keep operations smooth during rushes.",
+        "Maintain quality standards and a welcoming customer experience.",
       ],
     },
-    {
-      role: "Contact Center Agent (Remote)",
-      company: "Chord Specialty Dental Partners",
-      dates: "Oct 2024 — Jan 2025",
-      bullets: [
-        "Supported patients using web-based scheduling and record management systems.",
-        "Entered, validated, and maintained sensitive data with high accuracy.",
-        "Utilized Excel and Word for reporting, documentation, and process tracking.",
-        "Demonstrated compliance with security, privacy, and access protocols.",
-      ],
-    },
-    {
-      role: "Clinical Operations Coordinator",
-      company: "Prescott House Inc",
-      dates: "Mar 2024 — Sep 2024",
-      bullets: [
-        "Administered Alleva EMR and managed cloud-based systems for daily operations.",
-        "Customized digital forms to improve documentation efficiency and usability.",
-        "Managed Google Workspace accounts, permissions, and workflows.",
-        "Led technical and process improvements across departments.",
-      ],
-    },
-    {
-      role: "Live Chat Admissions Specialist",
-      company: "Meadows Behavioral Healthcare",
-      dates: "Oct 2022 — Feb 2024",
-      bullets: [
-        "Managed live chat systems and online intake tools for prospective clients.",
-        "Assessed user needs and routed inquiries using defined workflows.",
-        "Created and maintained digital records while ensuring data integrity.",
-        "Compiled weekly performance metrics and reports.",
-      ],
-    },
+    // Add more roles here if you want (from your resume content)
   ],
 
+  // Optional: simple timeline milestones
   timeline: [
     { when: "2025", what: "Started building a more focused IT + web development roadmap." },
     { when: "2025", what: "Began Raspberry Pi + Linux hands-on learning projects." },
     { when: "2026", what: "Launched a portfolio + personal project hub." },
   ],
 
+  // Contact call-to-action
   contact: {
     headline: "Want to build something useful?",
     body:
@@ -179,6 +156,7 @@ function usePrefersReducedMotion() {
 
 function useScrollSpy(sectionIds, offset = 120) {
   const [active, setActive] = useState(sectionIds[0] || "");
+
   useEffect(() => {
     const handler = () => {
       const positions = sectionIds
@@ -228,7 +206,9 @@ function Section({ id, eyebrow, title, children }) {
             {eyebrow}
           </div>
         ) : null}
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">{title}</h2>
+        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+          {title}
+        </h2>
       </div>
       {children}
     </section>
@@ -280,15 +260,27 @@ function ProjectCard({ p }) {
         <ExternalLink className="h-5 w-5 text-zinc-400 opacity-0 transition group-hover:opacity-100" />
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">{p.tags.map((t) => <Pill key={t}>{t}</Pill>)}</div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {p.tags.map((t) => (
+          <Pill key={t}>{t}</Pill>
+        ))}
+      </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 text-sm text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-200">
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Highlights</div>
-          <ul className="mt-2 list-disc space-y-1 pl-5">{p.highlights.map((h) => <li key={h}>{h}</li>)}</ul>
+          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            Highlights
+          </div>
+          <ul className="mt-2 list-disc space-y-1 pl-5">
+            {p.highlights.map((h) => (
+              <li key={h}>{h}</li>
+            ))}
+          </ul>
         </div>
         <div className="flex flex-col justify-between gap-3 rounded-xl border border-zinc-200 bg-white/60 p-3 dark:border-zinc-800 dark:bg-zinc-950/40">
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Links</div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            Links
+          </div>
           <div className="flex flex-wrap gap-2">
             {p.links?.repo && p.links.repo !== "#" ? (
               <a
@@ -297,7 +289,8 @@ function ProjectCard({ p }) {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white/70 px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-100"
               >
-                <Github className="h-4 w-4" /> Repo <ArrowUpRight className="h-4 w-4 opacity-70" />
+                <Github className="h-4 w-4" /> Repo
+                <ArrowUpRight className="h-4 w-4 opacity-70" />
               </a>
             ) : null}
             {p.links?.demo && p.links.demo !== "#" ? (
@@ -307,7 +300,8 @@ function ProjectCard({ p }) {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white/70 px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-100"
               >
-                <ExternalLink className="h-4 w-4" /> Live <ArrowUpRight className="h-4 w-4 opacity-70" />
+                <ExternalLink className="h-4 w-4" /> Live
+                <ArrowUpRight className="h-4 w-4 opacity-70" />
               </a>
             ) : null}
           </div>
@@ -326,7 +320,11 @@ function SkillGrid({ skills }) {
             <Code2 className="h-4 w-4 text-zinc-500" />
             <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">{group}</h3>
           </div>
-          <div className="mt-3 flex flex-wrap gap-2">{items.map((x) => <Pill key={x}>{x}</Pill>)}</div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {items.map((x) => (
+              <Pill key={x}>{x}</Pill>
+            ))}
+          </div>
         </Card>
       ))}
     </div>
@@ -350,7 +348,9 @@ function ExperienceList({ items }) {
             </div>
           </div>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
-            {e.bullets.map((b) => <li key={b}>{b}</li>)}
+            {e.bullets.map((b) => (
+              <li key={b}>{b}</li>
+            ))}
           </ul>
         </Card>
       ))}
@@ -366,7 +366,9 @@ function Timeline({ items }) {
           key={`${t.when}-${t.what}`}
           className="rounded-2xl border border-zinc-200 bg-white/70 p-4 text-sm text-zinc-700 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-200"
         >
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">{t.when}</div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            {t.when}
+          </div>
           <div className="mt-1">{t.what}</div>
         </div>
       ))}
@@ -406,8 +408,17 @@ function CommandPalette({ open, onClose, sections, projects }) {
 
   return (
     <AnimatePresence>
-      <motion.div className="fixed inset-0 z-50" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        <button className="absolute inset-0 bg-black/40" onClick={onClose} aria-label="Close search" />
+      <motion.div
+        className="fixed inset-0 z-50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <button
+          className="absolute inset-0 bg-black/40"
+          onClick={onClose}
+          aria-label="Close search"
+        />
         <motion.div
           className="absolute left-1/2 top-20 w-[min(720px,92vw)] -translate-x-1/2 rounded-3xl border border-zinc-200 bg-white p-4 shadow-2xl dark:border-zinc-800 dark:bg-zinc-950"
           initial={{ y: -10, opacity: 0, scale: 0.98 }}
@@ -434,6 +445,7 @@ function CommandPalette({ open, onClose, sections, projects }) {
                     key={`${r.type}-${r.id}`}
                     onClick={() => {
                       onClose();
+                      // Project cards are inside #projects, so scroll there then highlight
                       if (r.type === "project") {
                         scrollToId("projects");
                         setTimeout(() => {
@@ -447,7 +459,9 @@ function CommandPalette({ open, onClose, sections, projects }) {
                     className="flex w-full items-center justify-between rounded-2xl border border-zinc-200 bg-white px-3 py-3 text-left text-sm text-zinc-900 transition hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:hover:bg-zinc-900"
                   >
                     <span className="flex items-center gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">{r.type}</span>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                        {r.type}
+                      </span>
                       <span className="font-medium">{r.label}</span>
                     </span>
                     <ArrowUpRight className="h-4 w-4 text-zinc-400" />
@@ -494,7 +508,9 @@ export default function App() {
 
   useEffect(() => {
     const stored = window.localStorage.getItem("theme");
-    const initial = stored ? stored === "dark" : window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+    const initial = stored
+      ? stored === "dark"
+      : window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
     setDark(!!initial);
   }, []);
 
@@ -517,18 +533,27 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const motionProps = reducedMotion ? { initial: false, animate: false, transition: { duration: 0 } } : undefined;
+  const motionProps = reducedMotion
+    ? { initial: false, animate: false, transition: { duration: 0 } }
+    : undefined;
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-50">
+      {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-zinc-200/60 blur-3xl dark:bg-zinc-800/40" />
         <div className="absolute -right-40 top-40 h-96 w-96 rounded-full bg-zinc-200/60 blur-3xl dark:bg-zinc-800/40" />
         <div className="absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-zinc-200/40 blur-3xl dark:bg-zinc-800/30" />
       </div>
 
-      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} sections={sections.filter((s) => s.id !== "top")} projects={CONTENT.projects} />
+      <CommandPalette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        sections={sections.filter((s) => s.id !== "top")}
+        projects={CONTENT.projects}
+      />
 
+      {/* Top nav */}
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/70 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/60">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <button
@@ -568,7 +593,6 @@ export default function App() {
               <span className="hidden sm:inline">Search</span>
               <span className="hidden text-xs text-zinc-500 sm:inline">Ctrl K</span>
             </button>
-
             <button
               onClick={() => setDark((v) => !v)}
               className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white/70 p-2 text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-100"
@@ -582,6 +606,7 @@ export default function App() {
       </header>
 
       <main id="top" className="relative">
+        {/* Hero */}
         <div className="mx-auto max-w-6xl px-4 pt-10">
           <motion.div
             {...(motionProps || {
@@ -593,8 +618,12 @@ export default function App() {
           >
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <div className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">{CONTENT.title}</div>
-                <h1 className="mt-1 text-3xl font-semibold tracking-tight md:text-4xl">{CONTENT.tagline}</h1>
+                <div className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">
+                  {CONTENT.title}
+                </div>
+                <h1 className="mt-1 text-3xl font-semibold tracking-tight md:text-4xl">
+                  {CONTENT.tagline}
+                </h1>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Pill>{CONTENT.location}</Pill>
                   <Pill>{CONTENT.availability}</Pill>
@@ -605,17 +634,18 @@ export default function App() {
               <div className="flex flex-wrap gap-2">
                 <IconLink href={CONTENT.github} icon={Github} label="GitHub" />
                 <IconLink href={CONTENT.linkedin} icon={Linkedin} label="LinkedIn" />
-                <IconLink href={`mailto:${CONTENT.email}`} icon={Mail} label="Email" />
-                <button
-                  onClick={() => scrollToId("resume")}
+                <IconLink
+                  href={`mailto:${CONTENT.email}`}
+                  icon={Mail}
+                  label="Email"
+                />
+                <a
+                  href={CONTENT.resumeUrl}
                   className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white/70 px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-100"
-                  aria-label="Jump to resume"
-                  title="View resume"
                 >
-                  <FileText className="h-4 w-4" />
+                  <Download className="h-4 w-4" />
                   Resume
-                  <ArrowUpRight className="h-4 w-4 opacity-70" />
-                </button>
+                </a>
               </div>
             </div>
 
@@ -625,7 +655,9 @@ export default function App() {
                   <FileText className="h-4 w-4 text-zinc-500" />
                   <div className="text-sm font-semibold">Quick intro</div>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">{CONTENT.about.body[0]}</p>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
+                  {CONTENT.about.body[0]}
+                </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
                     onClick={() => scrollToId("projects")}
@@ -645,13 +677,12 @@ export default function App() {
               <Card>
                 <div className="flex items-center gap-2">
                   <Wrench className="h-4 w-4 text-zinc-500" />
-                  <div className="text-sm font-semibold">Career focus</div>
+                  <div className="text-sm font-semibold">Now building</div>
                 </div>
                 <ul className="mt-3 space-y-2 text-sm text-zinc-700 dark:text-zinc-200">
-                  <li>• Web design / UI</li>
-                  <li>• IT support / help desk</li>
-                  <li>• Technical operations</li>
-                  <li>• Documentation + workflow optimization</li>
+                  <li>• Web projects that prove skill</li>
+                  <li>• Linux + systems fundamentals</li>
+                  <li>• A teen-focused resource hub</li>
                 </ul>
                 <div className="mt-4 rounded-xl border border-zinc-200 bg-white/60 p-3 text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-300">
                   Tip: Press <span className="font-semibold">Ctrl + K</span> to search.
@@ -661,19 +692,31 @@ export default function App() {
           </motion.div>
         </div>
 
+        {/* Content */}
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-12">
           <Section id="about" eyebrow="About" title="Who I am">
             <div className="grid gap-4 md:grid-cols-3">
               <Card className="md:col-span-2">
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">{CONTENT.about.headline}</h3>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                  {CONTENT.about.headline}
+                </h3>
                 <div className="mt-3 space-y-3 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
-                  {CONTENT.about.body.map((p, i) => <p key={i}>{p}</p>)}
+                  {CONTENT.about.body.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
                 </div>
               </Card>
               <Card>
-                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Values</div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                  Values
+                </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {["Clarity", "Reliability", "Kindness", "Growth", "Craft"].map((v) => <Pill key={v}>{v}</Pill>)}
+                  {["Clarity", "Reliability", "Kindness", "Growth", "Craft"].map((v) => (
+                    <Pill key={v}>{v}</Pill>
+                  ))}
+                </div>
+                <div className="mt-5 text-xs text-zinc-500">
+                  Keep this section personal, but professional.
                 </div>
               </Card>
             </div>
@@ -721,7 +764,9 @@ export default function App() {
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <div className="text-sm font-semibold">Inline resume preview</div>
-                    <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">Embedded directly on the page (no pop-up).</div>
+                    <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+                      Embedded directly on the page (no pop-up). If you see a 404, confirm the file exists at <span className="font-semibold">public/Neil-Toms-Resume.pdf</span>.
+                    </div>
                   </div>
                   <a
                     href={CONTENT.resumeUrl}
@@ -739,19 +784,22 @@ export default function App() {
               </Card>
 
               <Card>
-                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Resume quick-scan</div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                  Quick-scan
+                </div>
                 <div className="mt-3 space-y-3 text-sm text-zinc-700 dark:text-zinc-200">
                   <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 dark:border-zinc-800 dark:bg-zinc-950/40">
-                    <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Strengths</div>
+                    <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Best fit roles</div>
                     <ul className="mt-2 list-disc space-y-1 pl-5">
-                      <li>Platform + system support</li>
-                      <li>Workflow optimization</li>
-                      <li>Clear documentation</li>
-                      <li>User-centered communication</li>
+                      <li>IT Support / Help Desk</li>
+                      <li>Technical Operations</li>
+                      <li>Junior Web / UI</li>
                     </ul>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {["Web design", "IT support", "Google Workspace", "EMR/CRM tools"].map((t) => <Pill key={t}>{t}</Pill>)}
+                    {["Troubleshooting", "Documentation", "Google Workspace", "Workflow optimization"].map((t) => (
+                      <Pill key={t}>{t}</Pill>
+                    ))}
                   </div>
                 </div>
               </Card>
@@ -766,7 +814,9 @@ export default function App() {
             <div className="grid gap-4 md:grid-cols-3">
               <Card className="md:col-span-2">
                 <div className="text-lg font-semibold">{CONTENT.contact.headline}</div>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">{CONTENT.contact.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
+                  {CONTENT.contact.body}
+                </p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   <a
                     href={`mailto:${CONTENT.email}`}
@@ -792,9 +842,10 @@ export default function App() {
                   </a>
                 </div>
               </Card>
-
               <Card>
-                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Quick info</div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                  Quick info
+                </div>
                 <div className="mt-3 space-y-3 text-sm text-zinc-700 dark:text-zinc-200">
                   <div>
                     <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Name</div>
@@ -815,7 +866,9 @@ export default function App() {
 
           <footer className="pb-6">
             <div className="flex flex-col items-start justify-between gap-3 border-t border-zinc-200 pt-6 text-sm text-zinc-600 dark:border-zinc-800 dark:text-zinc-400 md:flex-row md:items-center">
-              <div>© {new Date().getFullYear()} {CONTENT.name} · Built with React</div>
+              <div>
+                © {new Date().getFullYear()} {CONTENT.name} · Built with React
+              </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => scrollToId("top")}
