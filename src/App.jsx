@@ -1,8 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-// GitHub Pages friendly base URL (e.g. /portfolio/)
-const BASE_URL = import.meta.env.BASE_URL || "/";
 import {
   Github,
   Linkedin,
@@ -25,13 +22,29 @@ import {
  *
  * Stack: React + Tailwind + Framer Motion + lucide-react
  *
- * How to use quickly:
- * - Create a Vite React project
- * - Install deps: framer-motion lucide-react
- * - Ensure Tailwind is set up
- * - Replace App.jsx with this file (or paste into App.jsx)
- * - Edit the CONTENT object below
+ * Key features:
+ * - Sticky nav with scroll-spy
+ * - Command palette search (Ctrl/Cmd + K)
+ * - Dark mode with localStorage
+ * - GitHub Pages-safe asset URLs
+ * - Techy background (grid + glow + noise)
+ * - Photography gallery section
+ * - Project storytelling: Problem → Build → Result → What I learned
  */
+
+// GitHub Pages friendly base URL (e.g. "/portfolio/")
+const BASE_URL = (import.meta?.env?.BASE_URL || "/").replace(/([^/])$/, "$1/");
+
+// Noise texture (safe string build — avoids quote escaping issues)
+const NOISE_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180">
+  <filter id="n">
+    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+  </filter>
+  <rect width="180" height="180" filter="url(#n)" opacity="0.7" />
+</svg>
+`.trim();
+const NOISE_DATA_URI = `url("data:image/svg+xml,${encodeURIComponent(NOISE_SVG)}")`;
 
 const CONTENT = {
   name: "Neil Toms",
@@ -42,71 +55,142 @@ const CONTENT = {
   email: "neiltoms485@gmail.com",
   github: "https://github.com/neiltoms485-prog",
   linkedin: "https://www.linkedin.com/in/neil-toms-13567b239",
-  resumeUrl: `${BASE_URL}Neil-Toms-Resume.pdf`, // put your PDF in /public (Vite) or /public (Next)
+  // GitHub Pages-safe path (e.g. /portfolio/Neil-Toms-Resume.pdf)
+  resumeUrl: `${BASE_URL}Neil-Toms-Resume.pdf`,
   availability: "Open to entry-level IT / Web roles",
 
-  // Primary sections used throughout the site
   about: {
     headline: "Hands-on, detail-oriented, and obsessed with making things work.",
     body: [
       "I’m building a career in IT with a strong focus on websites, apps, and the systems behind them. I like projects that mix practical problem-solving with clean design.",
-      "I’m currently working full time while sharpening my skills in web development, Linux, and tooling. I’m also a maker — I tinker with Raspberry Pi, troubleshoot hardware/software issues, and design functional 3D prints.",
+      "I work full time while sharpening my skills in web development, Linux, and tooling. I’m also a maker — I tinker with Raspberry Pi, troubleshoot hardware/software issues, and design functional 3D prints.",
       "Long-term, I want to build a website/app aimed at helping struggling teens: a safe place to feel seen, find resources, and grow.",
     ],
   },
 
-  // Skills are grouped for UX; keep it honest and update as you grow
   skills: {
-    "Web": ["HTML", "CSS", "JavaScript", "Responsive UI", "Accessibility basics"],
+    Web: ["HTML", "CSS", "JavaScript", "Responsive UI", "Accessibility basics"],
     "IT / Systems": ["Troubleshooting", "Windows basics", "Linux basics", "Networking fundamentals"],
-    "Tools": ["Git/GitHub", "Command line", "VS Code", "Canva (design workflow)"],
-    "Maker": ["Raspberry Pi", "3D printing", "Iterative prototyping"],
-    "Strengths": ["Customer service", "Communication", "Learning fast", "Reliability"],
+    Tools: ["Git/GitHub", "Command line", "VS Code", "Canva (design workflow)"],
+    Maker: ["Raspberry Pi", "3D printing", "Iterative prototyping"],
+    Strengths: ["Customer service", "Communication", "Learning fast", "Reliability"],
   },
 
-  // Keep projects real; add links when available
+  // Photography-ready gallery (put images in /public/photos/)
+  gallery: [
+    {
+      id: "g1",
+      title: "City light study",
+      caption: "Low-light composition + contrast.",
+      src: `${BASE_URL}photos/shot-01.jpg`,
+    },
+    {
+      id: "g2",
+      title: "Desert textures",
+      caption: "Detail and pattern hunting.",
+      src: `${BASE_URL}photos/shot-02.jpg`,
+    },
+    {
+      id: "g3",
+      title: "Portrait practice",
+      caption: "Framing + natural light.",
+      src: `${BASE_URL}photos/shot-03.jpg`,
+    },
+    {
+      id: "g4",
+      title: "Minimal architecture",
+      caption: "Lines, symmetry, negative space.",
+      src: `${BASE_URL}photos/shot-04.jpg`,
+    },
+    {
+      id: "g5",
+      title: "Moody shadows",
+      caption: "Shapes + storytelling.",
+      src: `${BASE_URL}photos/shot-05.jpg`,
+    },
+    {
+      id: "g6",
+      title: "Color pop",
+      caption: "Finding clean color contrast.",
+      src: `${BASE_URL}photos/shot-06.jpg`,
+    },
+  ],
+
+  // Better project storytelling: Problem → Build → Result (+ What I learned)
   projects: [
     {
       id: "portfolio",
       name: "Interactive Portfolio Website",
-      blurb:
-        "A polished, mobile-first portfolio with motion, search, and project storytelling.",
-      tags: ["React", "Tailwind", "Design"],
-      links: {
-        demo: "#",
-        repo: "https://github.com/neiltoms485-prog",
+      blurb: "A polished, mobile-first portfolio with motion, search, and project storytelling.",
+      tags: ["React", "Tailwind", "Framer Motion"],
+      links: { demo: "#", repo: "https://github.com/neiltoms485-prog/portfolio" },
+      story: {
+        problem:
+          "I needed a portfolio that feels modern, loads fast, and makes it easy for employers to scan my skills and projects.",
+        built: [
+          "Sticky navigation + scroll spy",
+          "Command palette search (Ctrl/Cmd + K)",
+          "Dark mode with saved preference",
+          "GitHub Pages deployment using Actions",
+        ],
+        result: [
+          "Deployed a live, shareable portfolio URL",
+          "Created a reusable template for future projects",
+        ],
+        learned: [
+          "How GitHub Pages base paths affect assets",
+          "How to debug CI build failures from Action logs",
+          "How to design for fast scanning",
+        ],
       },
-      highlights: [
-        "Smooth navigation + section search",
-        "Dark mode toggle",
-        "Clean content hierarchy and scannable cards",
-      ],
     },
     {
       id: "pi",
       name: "Raspberry Pi Setup + Troubleshooting Notes",
-      blurb:
-        "My repeatable setup checklist for imaging, boot issues, and basic hardening/quality-of-life tweaks.",
-      tags: ["Linux", "Raspberry Pi", "Documentation"],
+      blurb: "A repeatable setup checklist for imaging, boot issues, and quality-of-life tweaks.",
+      tags: ["Linux", "Raspberry Pi", "Docs"],
       links: { demo: "#", repo: "#" },
-      highlights: [
-        "Step-by-step boot + imaging workflow",
-        "Common failure modes and fixes",
-        "Focus on clarity and repeatability",
-      ],
+      story: {
+        problem:
+          "I wanted a reliable way to set up and recover Raspberry Pi installs without re-learning the same fixes every time.",
+        built: [
+          "A step-by-step checklist for imaging + boot",
+          "A troubleshooting map for common failures",
+          "A reusable notes format I can expand over time",
+        ],
+        result: [
+          "Faster setup time and fewer repeat mistakes",
+          "Clear documentation I can reuse or share",
+        ],
+        learned: [
+          "How to isolate boot issues vs. storage issues",
+          "Why checklists prevent big time loss",
+        ],
+      },
     },
     {
       id: "3d",
       name: "3D-Printed Cup & Lid Organizer (Prototype)",
-      blurb:
-        "A functional storage design built around real-world constraints and iterative feedback.",
-      tags: ["3D Printing", "CAD", "Iteration"],
+      blurb: "A functional storage design built around real-world constraints and iterative feedback.",
+      tags: ["3D Printing", "Iteration", "Design"],
       links: { demo: "#", repo: "#" },
-      highlights: [
-        "Designed to fit tight cabinet dimensions",
-        "Modular pieces that snap together",
-        "Ergonomic curves for quick access",
-      ],
+      story: {
+        problem:
+          "I needed a compact organizer that fits strict cabinet dimensions and makes restocking fast and ergonomic.",
+        built: [
+          "Modular snap-together pieces",
+          "Curved supports to cradle sleeves and reduce snagging",
+          "Iterative sizing based on real measurements",
+        ],
+        result: [
+          "A printable prototype that improves organization",
+          "A repeatable process for refining physical designs",
+        ],
+        learned: [
+          "Iteration beats perfection for real-world fit",
+          "Designing for speed of use (not just appearance)",
+        ],
+      },
     },
   ],
 
@@ -121,17 +205,14 @@ const CONTENT = {
         "Maintain quality standards and a welcoming customer experience.",
       ],
     },
-    // Add more roles here if you want (from your resume content)
   ],
 
-  // Optional: simple timeline milestones
   timeline: [
     { when: "2025", what: "Started building a more focused IT + web development roadmap." },
     { when: "2025", what: "Began Raspberry Pi + Linux hands-on learning projects." },
     { when: "2026", what: "Launched a portfolio + personal project hub." },
   ],
 
-  // Contact call-to-action
   contact: {
     headline: "Want to build something useful?",
     body:
@@ -248,8 +329,12 @@ function IconLink({ href, icon: Icon, label }) {
 
 function ProjectCard({ p }) {
   return (
-    <Card className="group">
-      <div className="flex items-start justify-between gap-4">
+    <Card className="group relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
+        <div className="absolute -inset-20 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.20),transparent_55%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.10),transparent_55%)]" />
+      </div>
+
+      <div className="relative flex items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-zinc-500 group-hover:text-zinc-900 dark:text-zinc-400 dark:group-hover:text-zinc-100" />
@@ -260,27 +345,54 @@ function ProjectCard({ p }) {
         <ExternalLink className="h-5 w-5 text-zinc-400 opacity-0 transition group-hover:opacity-100" />
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="relative mt-4 flex flex-wrap gap-2">
         {p.tags.map((t) => (
           <Pill key={t}>{t}</Pill>
         ))}
       </div>
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="relative mt-4 grid gap-3 lg:grid-cols-2">
         <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 text-sm text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-200">
           <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-            Highlights
+            Problem
+          </div>
+          <p className="mt-2 leading-relaxed">{p.story.problem}</p>
+        </div>
+
+        <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 text-sm text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-200">
+          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            What I built
           </div>
           <ul className="mt-2 list-disc space-y-1 pl-5">
-            {p.highlights.map((h) => (
-              <li key={h}>{h}</li>
+            {p.story.built.map((x) => (
+              <li key={x}>{x}</li>
             ))}
           </ul>
         </div>
-        <div className="flex flex-col justify-between gap-3 rounded-xl border border-zinc-200 bg-white/60 p-3 dark:border-zinc-800 dark:bg-zinc-950/40">
+
+        <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 text-sm text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-200">
           <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-            Links
+            Result
           </div>
+          <ul className="mt-2 list-disc space-y-1 pl-5">
+            {p.story.result.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex flex-col justify-between gap-3 rounded-xl border border-zinc-200 bg-white/60 p-3 dark:border-zinc-800 dark:bg-zinc-950/40">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              What I learned
+            </div>
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
+              {p.story.learned.map((x) => (
+                <li key={x}>{x}</li>
+              ))}
+            </ul>
+          </div>
+
           <div className="flex flex-wrap gap-2">
             {p.links?.repo && p.links.repo !== "#" ? (
               <a
@@ -308,6 +420,39 @@ function ProjectCard({ p }) {
         </div>
       </div>
     </Card>
+  );
+}
+
+function GalleryGrid({ items }) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((img) => (
+        <div
+          key={img.id}
+          className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white/70 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/40"
+        >
+          <div className="aspect-[4/3] w-full overflow-hidden">
+            <img
+              src={img.src}
+              alt={img.title}
+              loading="lazy"
+              className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.06]"
+            />
+          </div>
+
+          <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+          </div>
+
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="translate-y-2 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+              <div className="text-sm font-semibold text-white">{img.title}</div>
+              <div className="mt-0.5 text-xs text-white/80">{img.caption}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -408,17 +553,8 @@ function CommandPalette({ open, onClose, sections, projects }) {
 
   return (
     <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 z-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <button
-          className="absolute inset-0 bg-black/40"
-          onClick={onClose}
-          aria-label="Close search"
-        />
+      <motion.div className="fixed inset-0 z-50" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <button className="absolute inset-0 bg-black/40" onClick={onClose} aria-label="Close search" />
         <motion.div
           className="absolute left-1/2 top-20 w-[min(720px,92vw)] -translate-x-1/2 rounded-3xl border border-zinc-200 bg-white p-4 shadow-2xl dark:border-zinc-800 dark:bg-zinc-950"
           initial={{ y: -10, opacity: 0, scale: 0.98 }}
@@ -445,7 +581,6 @@ function CommandPalette({ open, onClose, sections, projects }) {
                     key={`${r.type}-${r.id}`}
                     onClick={() => {
                       onClose();
-                      // Project cards are inside #projects, so scroll there then highlight
                       if (r.type === "project") {
                         scrollToId("projects");
                         setTimeout(() => {
@@ -459,9 +594,7 @@ function CommandPalette({ open, onClose, sections, projects }) {
                     className="flex w-full items-center justify-between rounded-2xl border border-zinc-200 bg-white px-3 py-3 text-left text-sm text-zinc-900 transition hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:hover:bg-zinc-900"
                   >
                     <span className="flex items-center gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
-                        {r.type}
-                      </span>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">{r.type}</span>
                       <span className="font-medium">{r.label}</span>
                     </span>
                     <ArrowUpRight className="h-4 w-4 text-zinc-400" />
@@ -482,6 +615,18 @@ function CommandPalette({ open, onClose, sections, projects }) {
   );
 }
 
+function runSelfTests() {
+  // Minimal runtime checks (only in dev) — helps catch common mistakes quickly.
+  try {
+    console.assert(typeof BASE_URL === "string" && BASE_URL.length > 0, "BASE_URL should be a non-empty string");
+    console.assert(CONTENT.resumeUrl.includes("Neil-Toms-Resume.pdf"), "Resume URL should include the PDF filename");
+    console.assert(Array.isArray(CONTENT.projects) && CONTENT.projects.length > 0, "Projects should be a non-empty array");
+    console.assert(Array.isArray(CONTENT.gallery) && CONTENT.gallery.length > 0, "Gallery should be a non-empty array");
+  } catch {
+    // no-op
+  }
+}
+
 export default function App() {
   const reducedMotion = usePrefersReducedMotion();
   const [dark, setDark] = useState(false);
@@ -493,6 +638,7 @@ export default function App() {
       { id: "about", label: "About" },
       { id: "skills", label: "Skills" },
       { id: "projects", label: "Projects" },
+      { id: "gallery", label: "Gallery" },
       { id: "experience", label: "Experience" },
       { id: "resume", label: "Resume" },
       { id: "timeline", label: "Timeline" },
@@ -508,9 +654,7 @@ export default function App() {
 
   useEffect(() => {
     const stored = window.localStorage.getItem("theme");
-    const initial = stored
-      ? stored === "dark"
-      : window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+    const initial = stored ? stored === "dark" : window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
     setDark(!!initial);
   }, []);
 
@@ -533,14 +677,34 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const motionProps = reducedMotion
-    ? { initial: false, animate: false, transition: { duration: 0 } }
-    : undefined;
+  useEffect(() => {
+    if (import.meta.env.DEV) runSelfTests();
+  }, []);
+
+  const motionProps = reducedMotion ? { initial: false, animate: false, transition: { duration: 0 } } : undefined;
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-50">
-      {/* Background glow */}
+      {/* Techy background: grid + noise + glow */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        {/* Subtle grid overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.20] dark:opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(120,120,120,0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(120,120,120,0.35) 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+            maskImage: "radial-gradient(ellipse at center, black 40%, transparent 75%)",
+          }}
+        />
+
+        {/* Noise texture */}
+        <div
+          className="absolute inset-0 opacity-[0.10] dark:opacity-[0.08]"
+          style={{ backgroundImage: NOISE_DATA_URI }}
+        />
+
+        {/* Glows */}
         <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-zinc-200/60 blur-3xl dark:bg-zinc-800/40" />
         <div className="absolute -right-40 top-40 h-96 w-96 rounded-full bg-zinc-200/60 blur-3xl dark:bg-zinc-800/40" />
         <div className="absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-zinc-200/40 blur-3xl dark:bg-zinc-800/30" />
@@ -553,7 +717,6 @@ export default function App() {
         projects={CONTENT.projects}
       />
 
-      {/* Top nav */}
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/70 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/60">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <button
@@ -618,12 +781,8 @@ export default function App() {
           >
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <div className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">
-                  {CONTENT.title}
-                </div>
-                <h1 className="mt-1 text-3xl font-semibold tracking-tight md:text-4xl">
-                  {CONTENT.tagline}
-                </h1>
+                <div className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">{CONTENT.title}</div>
+                <h1 className="mt-1 text-3xl font-semibold tracking-tight md:text-4xl">{CONTENT.tagline}</h1>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Pill>{CONTENT.location}</Pill>
                   <Pill>{CONTENT.availability}</Pill>
@@ -634,17 +793,12 @@ export default function App() {
               <div className="flex flex-wrap gap-2">
                 <IconLink href={CONTENT.github} icon={Github} label="GitHub" />
                 <IconLink href={CONTENT.linkedin} icon={Linkedin} label="LinkedIn" />
-                <IconLink
-                  href={`mailto:${CONTENT.email}`}
-                  icon={Mail}
-                  label="Email"
-                />
+                <IconLink href={`mailto:${CONTENT.email}`} icon={Mail} label="Email" />
                 <a
                   href={CONTENT.resumeUrl}
                   className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white/70 px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-100"
                 >
-                  <Download className="h-4 w-4" />
-                  Resume
+                  <Download className="h-4 w-4" /> Resume
                 </a>
               </div>
             </div>
@@ -655,9 +809,7 @@ export default function App() {
                   <FileText className="h-4 w-4 text-zinc-500" />
                   <div className="text-sm font-semibold">Quick intro</div>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
-                  {CONTENT.about.body[0]}
-                </p>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">{CONTENT.about.body[0]}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
                     onClick={() => scrollToId("projects")}
@@ -697,9 +849,7 @@ export default function App() {
           <Section id="about" eyebrow="About" title="Who I am">
             <div className="grid gap-4 md:grid-cols-3">
               <Card className="md:col-span-2">
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                  {CONTENT.about.headline}
-                </h3>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">{CONTENT.about.headline}</h3>
                 <div className="mt-3 space-y-3 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
                   {CONTENT.about.body.map((p, i) => (
                     <p key={i}>{p}</p>
@@ -707,17 +857,13 @@ export default function App() {
                 </div>
               </Card>
               <Card>
-                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                  Values
-                </div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Values</div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {["Clarity", "Reliability", "Kindness", "Growth", "Craft"].map((v) => (
                     <Pill key={v}>{v}</Pill>
                   ))}
                 </div>
-                <div className="mt-5 text-xs text-zinc-500">
-                  Keep this section personal, but professional.
-                </div>
+                <div className="mt-5 text-xs text-zinc-500">Keep this section personal, but professional.</div>
               </Card>
             </div>
           </Section>
@@ -727,6 +873,11 @@ export default function App() {
           </Section>
 
           <Section id="projects" eyebrow="Projects" title="Featured work">
+            <div className="mb-4 rounded-2xl border border-zinc-200 bg-white/60 p-4 text-sm text-zinc-700 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-200">
+              <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">How I present work</div>
+              <div className="mt-1">I keep projects scannable: <span className="font-semibold">Problem → Build → Result</span>, plus what I learned.</div>
+            </div>
+
             <div className="grid gap-4">
               {CONTENT.projects.map((p) => (
                 <div key={p.id} id={`project-${p.id}`} className="scroll-mt-28">
@@ -754,6 +905,13 @@ export default function App() {
             </div>
           </Section>
 
+          <Section id="gallery" eyebrow="Gallery" title="Photography">
+            <div className="mb-4 text-sm text-zinc-600 dark:text-zinc-300">
+              Add your photos to <span className="font-semibold">public/photos/</span> and name them <span className="font-semibold">shot-01.jpg</span> … <span className="font-semibold">shot-06.jpg</span> (or edit <span className="font-semibold">CONTENT.gallery</span>).
+            </div>
+            <GalleryGrid items={CONTENT.gallery} />
+          </Section>
+
           <Section id="experience" eyebrow="Experience" title="Work experience">
             <ExperienceList items={CONTENT.experience} />
           </Section>
@@ -764,9 +922,7 @@ export default function App() {
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <div className="text-sm font-semibold">Inline resume preview</div>
-                    <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-                      Embedded directly on the page (no pop-up). If you see a 404, confirm the file exists at <span className="font-semibold">public/Neil-Toms-Resume.pdf</span>.
-                    </div>
+                    <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">Embedded directly on the page (no pop-up).</div>
                   </div>
                   <a
                     href={CONTENT.resumeUrl}
@@ -784,9 +940,7 @@ export default function App() {
               </Card>
 
               <Card>
-                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                  Quick-scan
-                </div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Quick-scan</div>
                 <div className="mt-3 space-y-3 text-sm text-zinc-700 dark:text-zinc-200">
                   <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 dark:border-zinc-800 dark:bg-zinc-950/40">
                     <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Best fit roles</div>
@@ -814,9 +968,7 @@ export default function App() {
             <div className="grid gap-4 md:grid-cols-3">
               <Card className="md:col-span-2">
                 <div className="text-lg font-semibold">{CONTENT.contact.headline}</div>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
-                  {CONTENT.contact.body}
-                </p>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">{CONTENT.contact.body}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   <a
                     href={`mailto:${CONTENT.email}`}
@@ -842,10 +994,9 @@ export default function App() {
                   </a>
                 </div>
               </Card>
+
               <Card>
-                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                  Quick info
-                </div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Quick info</div>
                 <div className="mt-3 space-y-3 text-sm text-zinc-700 dark:text-zinc-200">
                   <div>
                     <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Name</div>
@@ -866,9 +1017,7 @@ export default function App() {
 
           <footer className="pb-6">
             <div className="flex flex-col items-start justify-between gap-3 border-t border-zinc-200 pt-6 text-sm text-zinc-600 dark:border-zinc-800 dark:text-zinc-400 md:flex-row md:items-center">
-              <div>
-                © {new Date().getFullYear()} {CONTENT.name} · Built with React
-              </div>
+              <div>© {new Date().getFullYear()} {CONTENT.name} · Built with React</div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => scrollToId("top")}
