@@ -56,7 +56,6 @@ const CONTENT = {
   name: "Neil Toms",
   title: "IT Support · Web · Technical Operations",
   tagline: "IT support + web-focused builder. I troubleshoot systems, document solutions, and ship clean, user-friendly web experiences.",
-    "Tech-focused professional supporting digital systems, optimizing workflows, and building user-friendly web experiences.",
   location: "Waddell, AZ",
   email: "neiltoms485@gmail.com",
   github: "https://github.com/neiltoms485-prog",
