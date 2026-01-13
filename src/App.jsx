@@ -228,14 +228,22 @@ function Pill({ children }) {
 function Section({ id, eyebrow, title, children }) {
   return (
     <section id={id} className="scroll-mt-24">
+      {/* Section header */}
       <div className="mb-6">
         {eyebrow ? (
           <div className="mb-2 text-xs font-semibold tracking-widest text-zinc-500 dark:text-zinc-400">
             {eyebrow}
           </div>
         ) : null}
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">{title}</h2>
+
+        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+          {title}
+        </h2>
+
+        {/* Accent divider */}
+        <div className="mt-3 h-px w-full bg-gradient-to-r from-indigo-500/40 via-cyan-400/30 to-transparent" />
       </div>
+
       {children}
     </section>
   );
@@ -245,7 +253,9 @@ function Card({ children, className }) {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-zinc-200 bg-white/70 p-5 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/40",
+        "rounded-2xl border border-zinc-200 bg-white/70 p-5 shadow-sm backdrop-blur transition-all duration-300",
+        "hover:-translate-y-1 hover:shadow-lg",
+        "dark:border-zinc-800 dark:bg-zinc-950/40",
         className
       )}
     >
