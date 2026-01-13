@@ -589,7 +589,7 @@ export default function App() {
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         {/* Optional image layer */}
         <div
-          className="absolute inset-0 opacity-[0.35] dark:opacity-[0.22] bg-center bg-cover"
+          className="absolute inset-0 opacity-[0.55] dark:opacity-[0.35] bg-center bg-cover"
           style={{ backgroundImage: `url(${BG_IMAGE_URL})` }}
         />
 
