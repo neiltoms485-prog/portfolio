@@ -87,7 +87,7 @@ const CONTENT = {
       name: "Interactive Portfolio Website",
       blurb: "A polished, mobile-first portfolio with motion, search, and project storytelling.",
       tags: ["React", "Tailwind", "Framer Motion"],
-      links: { demo: "#", repo: "https://github.com/neiltoms485-prog/portfolio" },
+      links: { demo: "", repo: "https://github.com/neiltoms485-prog/portfolio" },
       story: {
         problem:
           "I needed a portfolio that feels modern, loads fast, and makes it easy for employers to scan my skills and projects.",
