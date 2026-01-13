@@ -55,7 +55,7 @@ const NOISE_DATA_URI = `url("data:image/svg+xml,${encodeURIComponent(NOISE_SVG)}
 const CONTENT = {
   name: "Neil Toms",
   title: "IT Support · Web · Technical Operations",
-  tagline:
+  tagline: "IT support + web-focused builder. I troubleshoot systems, document solutions, and ship clean, user-friendly web experiences.",
     "Tech-focused professional supporting digital systems, optimizing workflows, and building user-friendly web experiences.",
   location: "Waddell, AZ",
   email: "neiltoms485@gmail.com",
@@ -67,10 +67,10 @@ const CONTENT = {
   about: {
     headline: "Hands-on, detail-oriented, and obsessed with making things work.",
     body: [
-      "I’m building a career in IT with a strong focus on websites, apps, and the systems behind them. I like projects that mix practical problem-solving with clean design.",
-      "I work full time while sharpening my skills in web development, Linux, and tooling. I’m also a maker — I tinker with Raspberry Pi, troubleshoot hardware/software issues, and design functional 3D prints.",
-      "Long-term, I want to build a website/app aimed at helping struggling teens: a safe place to feel seen, find resources, and grow.",
-    ],
+  "I’m building a career in IT support and web development, focused on practical problem-solving and clean design.",
+  "I’m strongest at troubleshooting, documenting solutions, and improving workflows in fast-paced environments.",
+  "Right now I’m building small, polished projects to prove skills and grow into bigger systems and web work."
+],
   },
 
   skills: {
