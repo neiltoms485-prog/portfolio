@@ -39,7 +39,7 @@ const BASE_URL = (import.meta?.env?.BASE_URL || "/").replace(/([^/])$/, "$1/");
 
 // Optional background image (upload to: public/backgrounds/tech-bg.jpg)
 // If you don't add the file, the design still works (image layer is just ignored by the browser).
-const BG_IMAGE_URL = `${BASE_URL}backgrounds/tech-bg.jpg`;
+const BG_IMAGE_URL = `${BASE_URL}backgrounds/tech-bg.png`;
 
 // Noise texture (SVG → data uri)
 const NOISE_SVG = `
