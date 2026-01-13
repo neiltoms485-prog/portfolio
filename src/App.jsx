@@ -209,19 +209,23 @@ function useScrollSpy(sectionIds, offset = 120) {
 
   return active;
 }
-
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function Pill({ children }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-zinc-200 bg-white/70 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-200">
-      {children}
-    </span>
-  );
+function copyToClipboard(text) {
+  if (!text) return;
+  // Modern browsers
+  if (navigator?.clipboard?.writeText) {
+    navigator.clipboard.writeText(text);
+    return;
+  }
+  // Fallback
+  const el = document.createElement("textarea");
+  el.value = text;
+  el.setAttribute("readonly", "");
+  el.style.position = "absolute";
+  el.style.left = "-9999px";
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
 }
 
 function Section({ id, eyebrow, title, children }) {
@@ -925,7 +929,17 @@ export default function App() {
                     href={`mailto:${CONTENT.email}`}
                     className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:bg-white dark:text-zinc-900"
                   >
-                    <Mail className="h-4 w-4" /> Email me
+                    <Mail className="h-4 w-4" /> Email me <button
+  onClick={() => {
+    copyToClipboard(CONTENT.email);
+    alert("Email copied!");
+  }}
+  className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white/70 px-4 py-2 text-sm font-semibold text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-50"
+>
+  <FileText className="h-4 w-4" />
+  Copy email
+</button>
+
                   </a>
                   <a
                     href={CONTENT.github}
