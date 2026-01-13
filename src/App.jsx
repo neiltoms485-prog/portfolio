@@ -74,12 +74,11 @@ const CONTENT = {
   },
 
   skills: {
-    Web: ["HTML", "CSS", "JavaScript", "Responsive UI", "Accessibility basics"],
-    "IT / Systems": ["Troubleshooting", "Windows basics", "Linux basics", "Networking fundamentals"],
-    Tools: ["Git/GitHub", "Command line", "VS Code", "Canva (design workflow)"],
-    Maker: ["Raspberry Pi", "3D printing", "Iterative prototyping"],
-    Strengths: ["Customer service", "Communication", "Learning fast", "Reliability"],
-  },
+  "IT Support": ["Troubleshooting", "Ticket-style documentation", "Windows basics", "Linux basics", "Networking fundamentals"],
+  "Web": ["HTML", "CSS", "JavaScript", "Responsive UI"],
+  "Tools": ["Git/GitHub", "VS Code", "Command line", "Google Workspace"],
+  "Workflow": ["Customer communication", "Process improvement", "Accuracy under pressure"]
+},
 
   projects: [
     {
