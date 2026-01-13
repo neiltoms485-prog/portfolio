@@ -589,9 +589,13 @@ export default function App() {
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         {/* Optional image layer */}
         <div
-          className="absolute inset-0 opacity-[0.55] dark:opacity-[0.35] bg-center bg-cover"
-          style={{ backgroundImage: `url(${BG_IMAGE_URL})` }}
-        />
+  className="absolute inset-0 bg-center bg-cover opacity-[0.6] dark:opacity-[0.45]"
+  style={{
+    backgroundImage: `url(${BG_IMAGE_URL})`,
+    filter: "blur(2px)",
+    transform: "scale(1.05)",
+  }}
+/>
 
         {/* Animated glow */}
         <div className="absolute inset-0">
