@@ -824,7 +824,6 @@ export default function App() {
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <div className="text-sm font-semibold">Inline resume preview</div>
-                    <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">Embedded directly on the page (no pop-up).</div>
                   </div>
                   <a
                     href={CONTENT.resumeUrl}
