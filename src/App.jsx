@@ -584,7 +584,7 @@ export default function App() {
   const motionProps = reducedMotion ? { initial: false, animate: false, transition: { duration: 0 } } : undefined;
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-50">
+    <div className="min-h-screen bg-transparent text-zinc-900 antialiased dark:text-zinc-50">
       {/* Premium background: optional image + gradient glow + grid + noise */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         {/* Optional image layer */}
