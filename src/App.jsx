@@ -818,43 +818,98 @@ export default function App() {
             <ExperienceList items={CONTENT.experience} />
           </Section>
 
-          <Section id="resume" eyebrow="Resume" title="Resume (embedded)">
-            <div className="grid gap-4 md:grid-cols-3">
-              <Card className="md:col-span-2">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <div className="text-sm font-semibold">Inline resume preview</div>
-                  </div>
-                  <a
-                    href={CONTENT.resumeUrl}
-                    className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white/70 px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-100"
-                  >
-                    <Download className="h-4 w-4" /> Download
-                  </a>
-                </div>
+          <Section id="resume" eyebrow="Resume" title="Resume">
+  <div className="grid gap-4 md:grid-cols-3">
+    {/* Left: actions + embedded preview */}
+    <Card className="md:col-span-2">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <div className="text-sm font-semibold">Resume (PDF)</div>
+          <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+            Download, open in a new tab, or preview below.
+          </div>
+        </div>
 
-                <div className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/40">
-                  <object data={CONTENT.resumeUrl} type="application/pdf" className="h-[70vh] w-full" aria-label="Resume PDF">
-                    <iframe src={CONTENT.resumeUrl} title="Resume PDF" className="h-[70vh] w-full" />
-                  </object>
-                </div>
-              </Card>
+        <div className="flex flex-wrap gap-2">
+          <a
+            href={CONTENT.resumeUrl}
+            className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:bg-white dark:text-zinc-900"
+          >
+            <Download className="h-4 w-4" />
+            Download
+          </a>
 
-              <Card>
-                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Quick-scan</div>
-                <div className="mt-3 space-y-3 text-sm text-zinc-700 dark:text-zinc-200">
-                  <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 dark:border-zinc-800 dark:bg-zinc-950/40">
-                    <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Best fit roles</div>
-                    <ul className="mt-2 list-disc space-y-1 pl-5">
-                      <li>IT Support / Help Desk</li>
-                      <li>Technical Operations</li>
-                      <li>Junior Web / UI</li>
-                    </ul>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </Section>
+          <a
+            href={CONTENT.resumeUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white/70 px-4 py-2 text-sm font-semibold text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-50"
+          >
+            <ExternalLink className="h-4 w-4" />
+            Open
+          </a>
+        </div>
+      </div>
+
+      <div className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/40">
+        <object
+          data={CONTENT.resumeUrl}
+          type="application/pdf"
+          className="h-[75vh] w-full"
+          aria-label="Resume PDF"
+        >
+          <iframe
+            src={CONTENT.resumeUrl}
+            title="Resume PDF"
+            className="h-[75vh] w-full"
+          />
+        </object>
+      </div>
+    </Card>
+
+    {/* Right: quick scan */}
+    <Card>
+      <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+        Quick scan
+      </div>
+
+      <div className="mt-3 space-y-4 text-sm text-zinc-700 dark:text-zinc-200">
+        <div>
+          <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+            Best fit roles
+          </div>
+          <ul className="mt-2 list-disc space-y-1 pl-5">
+            <li>IT Support / Help Desk</li>
+            <li>Technical Operations</li>
+            <li>Junior Web / UI</li>
+          </ul>
+        </div>
+
+        <div>
+          <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+            Strengths
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {["Troubleshooting", "Documentation", "Workflow improvement", "Customer communication"].map((t) => (
+              <Pill key={t}>{t}</Pill>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+            Tools
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {["Git/GitHub", "Google Workspace", "VS Code", "Command line"].map((t) => (
+              <Pill key={t}>{t}</Pill>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Card>
+  </div>
+</Section>
 
           <Section id="timeline" eyebrow="Timeline" title="Milestones">
             <Timeline items={CONTENT.timeline} />
